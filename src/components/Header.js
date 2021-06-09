@@ -1,16 +1,17 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
-import {theme} from '../utils/constants';
+import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
+import {theme, LOCATION} from '../utils/constants';
+import {refresh} from '../assets/index';
 
-const Header = () => {
+const Header = ({reload}) => {
   return (
     <View style={styles.container}>
       <View>
-        <Text style={styles.city}>Chennai</Text>
+        <Text style={styles.city}>{LOCATION.name}</Text>
       </View>
-      <View>
-        <Text>End</Text>
-      </View>
+      <TouchableOpacity style={{margin: 10}} onPress={() => reload()}>
+        <Image source={refresh} style={{width: 25, height: 25}} />
+      </TouchableOpacity>
     </View>
   );
 };
@@ -29,7 +30,7 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
     margin: 5,
     marginLeft: 15,
-    fontFamily: 'monospace',
+    fontFamily: 'Roboto',
   },
 });
 export default Header;

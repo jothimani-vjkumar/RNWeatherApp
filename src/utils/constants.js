@@ -1,5 +1,5 @@
 export const theme = {
-  color: '#4D8FAC',
+  color: '#156482',
   fontColor: '#f7f7f7',
   header: '#323232',
 };
@@ -12,6 +12,7 @@ export const API_KEY = '1062d815138c0dc8376a9615881bf119';
 
 //Chennai Location passed Statically
 export const LOCATION = {
+  name: 'CHENNAI',
   latitude: 13.06,
   longitude: 80.23,
 };

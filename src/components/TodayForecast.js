@@ -1,22 +1,38 @@
-import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {View, Text, StyleSheet, Image} from 'react-native';
 import {theme} from '../utils/constants';
+import moment from 'moment';
 
-const TodayForecast = () => {
+const TodayForecast = ({current}) => {
+  const [report, setReport] = useState({});
+
+  useEffect(() => {
+    let ac = new AbortController();
+    const data = {
+      day: moment().utc(current.dt).format('dddd'),
+      date: moment(+current.dt * 1000).format('DD MMM YYYY'),
+      icon: `http://openweathermap.org/img/wn/${current.weather[0].icon}@2x.png`,
+      temp: Math.round(current.temp),
+      summary: current.weather[0].main,
+    };
+    setReport(data);
+    return () => {
+      ac.abort();
+    };
+  }, [current]);
+
   return (
     <View style={styles.container}>
       <View style={styles.todayresult}>
         <View>
-          <Text style={styles.day}>Monday</Text>
-          <Text style={styles.temp}>25 C</Text>
+          <Text style={styles.day}>{report.day}</Text>
+          <Text style={styles.temp}>{report.temp}&#176;C</Text>
         </View>
-        <View>
-          <Text>Icon</Text>
-        </View>
+        <Image source={{uri: report.icon}} style={{width: 150, height: 120}} />
       </View>
       <View style={styles.daterow}>
-        <Text style={styles.date}>22 May 2021</Text>
-        <Text style={styles.summary}>Cloudy</Text>
+        <Text style={styles.date}>{report.date}</Text>
+        <Text style={styles.summary}>{report.summary}</Text>
       </View>
     </View>
   );
@@ -27,10 +43,10 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'space-between',
     height: '25%',
-    width: '100%',
     backgroundColor: theme.color,
     borderBottomLeftRadius: 10,
     borderBottomRightRadius: 10,
+    marginHorizontal: 2,
   },
   todayresult: {
     flexDirection: 'row',
@@ -76,6 +92,11 @@ const styles = StyleSheet.create({
     marginHorizontal: 30,
     marginVertical: 5,
     fontWeight: 'bold',
+  },
+  icon: {
+    width: 150,
+    height: 120,
+    marginRight: 20,
   },
 });
 export default TodayForecast;

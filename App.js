@@ -17,11 +17,15 @@ import {
   View,
 } from 'react-native';
 import Weather from './src/screen/Weather';
+import {Provider} from 'react-redux';
+import store from './src/redux/store';
 
-const App: () => Node = () => {
+const App = () => {
   return (
     <SafeAreaView style={{flex: 1}}>
-      <Weather />
+      <Provider store={store}>
+        <Weather />
+      </Provider>
     </SafeAreaView>
   );
 };
